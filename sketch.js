@@ -2,7 +2,7 @@ let rotateVal = 0;
 let gameState = 1;
 let input;
 let grayscaleValue = 150;
-let slider;
+let slider, sliderfake1, sliderfake2, sliderfake3, sliderfake4, sliderfake5;
 let select;
 let selectedValue;
 let bool = false;
@@ -18,9 +18,7 @@ function setup() {
   imageMode(CENTER);
 
   input = createInput();
-  input.position(width/2 - input.width/2, height/2-50);
-
-  input.position(width);
+  input.position(725, 350);
 
   myString = '';
   background(150);
@@ -35,7 +33,8 @@ function draw() {
     textSize(20);
     textAlign(CENTER);
     fill(255);
-    text('Enter password', 450, 200);
+    text('Welcome to the maze', 400, 175);
+    text('Enter password', 400, 200);
     button = createButton('submit');
     button.position(input.x + input.width, height/2-50);
     button.mousePressed(buttonFunction);
@@ -70,27 +69,29 @@ function draw() {
     grayscaleValue--;
     if(grayscaleValue <= 0) {
       grayscaleValue = 0;
-      gameState = 5;
+      gameState = 4.5;
     }
   }
-  else if(gameState === 5) { // Start of third stage
-    // noCanvas();
-    noLoop();
-    bool = true;
-    background(0);
-
-    text('Do you wish to continue?', 400, 100);
-
+  else if(gameState === 4.5) { //4.5 (create select)
     select = createSelect();
     select.position(800, 220);
     select.option('no');
     select.option('yes');
+    gameState = 5;
+  }
 
+  else if(gameState === 5) { // Start of third stage
+    // noCanvas();
+    // noLoop();
+    bool = true;
+    background(0);
+
+    text('The path ahead is dangerous', 400, 75);
+    text('Do you wish to continue?', 400, 100);
     selectedValue = select.value();
 
     if(selectedValue === 'yes') {
       gameState = 6;
-      loop();
     }
 
   }
@@ -100,12 +101,45 @@ function draw() {
     grayscaleValue++;
     if(grayscaleValue >= 255) {
       grayscaleValue = 0;
-      gameState = 7;
+      gameState = 6.5;
     }
+  }
+  else if(gameState === 6.5) { //create slider
+    sliderfake1 = createSlider(0, 100, 0, 1);
+    sliderfake1.position(700, 400);
+    sliderfake2 = createSlider(0, 100, 0, 1);
+    sliderfake2.position(700, 450);
+    sliderfake3 = createSlider(0, 100, 0, 1);
+    sliderfake3.position(700, 500);
+    sliderfake4 = createSlider(0, 100, 0, 1);
+    sliderfake4.position(700, 550);
+
+    slider = createSlider(0, 100, 0, 1);
+    slider.position(700, 600);
+    sliderValue = 0;
+
+    gameState = 7;
   }
   else if(gameState === 7) { //Start of fourth stage
     background(255);
-
+    text('Set the sliders to the correct positions to continue', 400, 100);
+    fill(0);
+    if(slider.value() === 100) {
+      gameState = 8;
+    }
+  }
+  else if(gameState === 8) { //Transition to final stage
+    removeElements();
+    background(grayscaleValue);
+    grayscaleValue--;
+    if(grayscaleValue <= 0) {
+      grayscaleValue = 0;
+      gameState = 8.5;
+    }
+  }
+  else if(gameState === 8.5) { //create element
+    text('END OF THE MAZE', 400, 300);
+    text('Thanks for playing', 400, 350);
   }
 rotateVal += 0.03
 
