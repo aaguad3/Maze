@@ -137,7 +137,13 @@ function draw() {
       gameState = 8.5;
     }
   }
-  else if(gameState === 8.5) { //create element
+  else if(gameState === 8.5) { //create button
+    button = createButton('Play again');
+    button.position(800, 500);
+    button.mousePressed(buttonFunction);
+    gameState = 9;
+  }
+  else if(gameState === 9) {
     text('END OF THE MAZE', 400, 300);
     text('Thanks for playing', 400, 350);
   }
